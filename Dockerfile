@@ -1,7 +1,7 @@
 FROM debian:stretch
 
 RUN apt-get update && apt-get -y upgrade && \
-    apt-get install -y wget libpcre3-dev build-essential libssl-dev zlib1g-dev && \
+    apt-get install -y wget libpcre3-dev build-essential libssl-dev zlib1g-dev gettext && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
@@ -16,6 +16,7 @@ RUN wget http://nginx.org/download/nginx-1.12.2.tar.gz && \
 # nginx user
 RUN adduser --system --no-create-home --disabled-login --disabled-password --group nginx
 
+ADD nginx.conf /opt/nginx/conf/nginx.conf
 WORKDIR /
 
 CMD ["/opt/nginx/sbin/nginx", "-g", "daemon off;"]
